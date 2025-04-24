@@ -1,0 +1,37 @@
+import math
+
+velocidade_inicial = float(input("Informe a velocidade inicial (m/s): "))
+angulo_inicial = float(input("Informe o ângulo de lançamento (graus): "))
+gravidade = 9.81
+resistencia_ar = float(input("Informe o fator de resistência do ar (coeficiente): "))
+tempo_max = float(input("Informe o tempo máximo de simulação (segundos): "))
+intervalo_tempo = float(input("Informe o intervalo de tempo para a simulação (segundos): "))
+
+angulo_inicial_rad = math.radians(angulo_inicial)
+
+velocidade_x = velocidade_inicial * math.cos(angulo_inicial_rad)
+velocidade_y = velocidade_inicial * math.sin(angulo_inicial_rad)
+posicao_x = 0
+posicao_y = 0
+tempo = 0
+posicoes_x = []
+posicoes_y = []
+
+while posicao_y >= 0 and tempo <= tempo_max:
+    aceleracao_x = -resistencia_ar * velocidade_x
+    aceleracao_y = -gravidade - resistencia_ar * velocidade_y
+
+    velocidade_x += aceleracao_x * intervalo_tempo
+    velocidade_y += aceleracao_y * intervalo_tempo
+
+    posicao_x += velocidade_x * intervalo_tempo
+    posicao_y += velocidade_y * intervalo_tempo
+
+    posicoes_x.append(posicao_x)
+    posicoes_y.append(posicao_y)
+
+    tempo += intervalo_tempo
+
+print(f"Distância total percorrida: {posicao_x:.2f} metros")
+print(f"Altura máxima alcançada: {max(posicoes_y):.2f} metros")
+print(f"Tempo total de voo: {tempo:.2f} segundos")
